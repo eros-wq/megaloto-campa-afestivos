@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Megaloto · Reporte Campaña Festivos Mayo 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F5F5F5; --black: #1A1A1A; --yellow: #FFC000; --white: #FFFFFF;
+  --t1: #1A1A1A; --t2: #333333; --t3: #999999; --t4: #666666;
+  --border: #E0E0E0; --green: #16A34A; --green-bg: #DCFCE7;
+  --red: #DC2626; --red-bg: #FEE2E2; --blue: #2563EB; --blue-bg: #DBEAFE;
+  --warn: #B45309; --warn-bg: #FEF3C7;
+  --megaloto: #2E9E4F;
+}
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t1); }
+
+.header {
+  background: var(--black); padding: 13px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-radius: 0 0 18px 18px; margin: 0 20px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.logo { width: 36px; height: 36px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--black); flex-shrink: 0; }
+.header-title { color: #fff; font-size: 14.5px; font-weight: 400; }
+.header-title strong { font-weight: 700; font-style: italic; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.hbadge { background: var(--yellow); color: var(--black); font-size: 10.5px; font-weight: 700; padding: 4px 14px; border-radius: 20px; }
+.hbadge.outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.7); font-weight: 400; }
+
+.page { max-width: 1080px; margin: 0 auto; padding: 28px 20px 70px; }
+
+.sl { font-size: 10px; font-weight: 700; color: var(--t3); letter-spacing: 0.12em; text-transform: uppercase; margin: 32px 0 14px; display: flex; align-items: center; gap: 10px; }
+.sl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.sl:first-of-type { margin-top: 4px; }
+
+/* KPI GRIDS */
+.kpi-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.kpi-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.kpi-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.kpi {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 14px 20px;
+  position: relative; overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+}
+.kpi::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+.kpi.green::after { background: var(--green); }
+.kpi.blue::after { background: var(--blue); }
+.kpi.black::after { background: var(--black); }
+.kpi:nth-child(1){animation-delay:.04s} .kpi:nth-child(2){animation-delay:.08s}
+.kpi:nth-child(3){animation-delay:.12s} .kpi:nth-child(4){animation-delay:.16s}
+.kpi:nth-child(5){animation-delay:.20s}
+.kpi-label { font-size: 10px; color: var(--t3); font-weight: 500; margin-bottom: 6px; }
+.kpi-value { font-size: 26px; font-weight: 700; color: var(--t1); line-height: 1; margin-bottom: 3px; }
+.kpi-value.green { color: var(--green); }
+.kpi-value.blue { color: var(--blue); }
+.kpi-value.yellow { color: #92400E; }
+.kpi-sub { font-size: 10px; color: var(--t4); font-weight: 300; }
+.kpi-note { font-size: 10px; font-weight: 600; margin-top: 5px; }
+.note-ok { color: var(--green); } .note-warn { color: var(--warn); } .note-blue { color: var(--blue); }
+
+/* CANALES */
+.canales-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.canal-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px; position: relative; overflow: hidden;
+}
+.canal-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.canal-card.meta::before { background: #1877F2; }
+.canal-card.sms::before { background: var(--yellow); }
+.canal-card.whatsapp::before { background: var(--megaloto); }
+.canal-icon { font-size: 22px; margin-bottom: 8px; }
+.canal-name { font-size: 13px; font-weight: 700; color: var(--t1); margin-bottom: 6px; }
+.canal-desc { font-size: 11px; color: var(--t4); line-height: 1.6; font-weight: 300; }
+.canal-stat { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.cstat { background: var(--bg); border-radius: 8px; padding: 5px 10px; font-size: 10px; font-weight: 600; color: var(--t2); }
+
+/* FUNNEL FULL */
+.funnel-wrap {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px 28px;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+}
+.f-step { text-align: center; padding: 6px 4px; position: relative; }
+.f-step:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); color: var(--yellow); font-size: 18px; font-weight: 700; }
+.f-num { font-size: 26px; font-weight: 700; color: var(--t1); line-height: 1; margin-bottom: 4px; }
+.f-num.green { color: var(--green); } .f-num.blue { color: var(--blue); } .f-num.yellow { color: #92400E; }
+.f-label { font-size: 11px; color: var(--t2); font-weight: 500; margin-bottom: 4px; }
+.f-rate { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.f-rate.blue { background: var(--blue-bg); color: var(--blue); }
+.f-rate.green { background: var(--green-bg); color: var(--green); }
+.f-rate.yellow { background: var(--warn-bg); color: var(--warn); }
+.f-rate.gray { background: #F3F4F6; color: var(--t3); }
+.f-source { font-size: 9px; color: var(--t3); margin-top: 3px; font-style: italic; }
+
+/* TABLE */
+.table-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; }
+thead th { background: var(--black); color: #fff; font-size: 10px; font-weight: 600; padding: 10px 14px; text-align: left; letter-spacing: 0.04em; text-transform: uppercase; }
+tbody tr { border-bottom: 1px solid #F0F0F0; transition: background 0.15s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #FAFAFA; }
+tbody td { font-size: 12px; color: var(--t2); padding: 10px 14px; }
+tbody td.num { font-weight: 600; color: var(--t1); }
+.tr-best td { background: #FFFBEB; }
+.tr-total td { background: #F5F5F5; font-weight: 700; }
+.tr-total td.num { color: var(--t1); }
+.tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; display: inline-block; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-gray { background: #F3F4F6; color: var(--t3); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-bg); color: var(--blue); }
+.tag-warn { background: var(--warn-bg); color: var(--warn); }
+.tag-yellow { background: #FEF3C7; color: #92400E; }
+
+/* VS CARDS */
+.vs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.vs-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; }
+.vs-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+.vs-label { font-size: 10px; color: var(--t3); font-weight: 500; margin-bottom: 10px; }
+.vs-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.vs-tag { font-size: 10px; color: var(--t3); }
+.vs-num-sm { font-size: 14px; font-weight: 600; color: var(--t3); }
+.vs-num { font-size: 20px; font-weight: 700; color: var(--t1); }
+.vs-delta { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; display: inline-block; margin-top: 4px; }
+.delta-pos { background: var(--green-bg); color: var(--green); }
+.delta-neg { background: var(--red-bg); color: var(--red); }
+.delta-neu { background: #F3F4F6; color: var(--t3); }
+
+/* CHART */
+.chart-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+.chart-title { font-size: 12px; font-weight: 600; color: var(--t2); margin-bottom: 16px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.legend { display: flex; gap: 18px; margin-top: 10px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--t3); }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+/* INSIGHT */
+.insight {
+  background: var(--white); border: 1px solid var(--border); border-left: 5px solid var(--yellow);
+  border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 12px; color: var(--t4);
+  line-height: 1.65; margin-top: 8px;
+}
+.insight strong { color: var(--t1); font-weight: 600; }
+.insight.green { border-left-color: var(--green); }
+.insight.blue { border-left-color: var(--blue); }
+.insight.red { border-left-color: var(--red); }
+
+/* NOTA sin tracking */
+.no-track {
+  background: #F8F9FA; border: 1px dashed #CCC;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 11px; color: var(--t3); line-height: 1.6;
+  margin-top: 6px; font-style: italic;
+}
+
+/* RECO */
+.reco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.reco-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px 22px; position: relative; overflow: hidden; }
+.reco-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+.reco-num { width: 28px; height: 28px; background: var(--black); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+.reco-title { font-size: 12px; font-weight: 600; color: var(--t1); margin-bottom: 6px; }
+.reco-body { font-size: 11px; color: var(--t4); line-height: 1.6; font-weight: 300; }
+
+/* DAY COMPARE */
+.day-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.day-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+.day-title { font-size: 11px; font-weight: 700; color: var(--t3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.day-title span { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.day-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #F0F0F0; font-size: 12px; }
+.day-row:last-child { border-bottom: none; }
+.day-key { color: var(--t3); }
+.day-val { font-weight: 600; color: var(--t1); }
+.day-val.green { color: var(--green); }
+.day-val.red { color: var(--red); }
+
+.footnote { font-size: 10.5px; color: var(--t3); line-height: 1.8; margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); font-weight: 300; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">AC</div>
+    <div class="header-title">Megaloto · <strong>Campaña 2da Jugada Gratis · Festivos Paraguay</strong></div>
+  </div>
+  <div class="header-right">
+    <span class="hbadge outline">14–15 mayo 2026</span>
+    <span class="hbadge">Meta + SMS + WhatsApp</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── KPIs NEGOCIO ── -->
+  <div class="sl">Resultados de negocio · backend Megaloto (14–15 mayo)</div>
+  <div class="kpi-5">
+    <div class="kpi green">
+      <p class="kpi-label">Nuevos jugadores</p>
+      <p class="kpi-value green">168</p>
+      <p class="kpi-sub">95 jueves · 73 viernes</p>
+      <p class="kpi-note note-ok">Todos los canales</p>
+    </div>
+    <div class="kpi green">
+      <p class="kpi-label">Canjes de promo</p>
+      <p class="kpi-value green">141</p>
+      <p class="kpi-sub">78 jueves · 63 viernes</p>
+      <p class="kpi-note note-ok">84% tasa de canje</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Tasa de canje</p>
+      <p class="kpi-value yellow">84%</p>
+      <p class="kpi-sub">141 canjes / 168 nuevos</p>
+      <p class="kpi-note note-ok">Mecánica bien entendida</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Jugadas totales</p>
+      <p class="kpi-value">430</p>
+      <p class="kpi-sub">Todos los UTM · 2 días</p>
+      <p class="kpi-note note-ok">32% ventas LotoQr</p>
+    </div>
+    <div class="kpi blue">
+      <p class="kpi-label">Jugadas con UTM</p>
+      <p class="kpi-value blue">289</p>
+      <p class="kpi-sub">Meta + SMS + WhatsApp</p>
+      <p class="kpi-note note-blue">141 sin UTM (canjes)</p>
+    </div>
+  </div>
+
+  <div class="insight green">
+    La campaña generó <strong>168 nuevos jugadores reales</strong> con una tasa de canje del <strong>84%</strong> — la mecánica de 2da jugada gratis fue bien entendida por el usuario. El jueves estuvo <strong>+17.3% sobre el promedio histórico de 3 meses</strong>. La caída del viernes se atribuye al contexto de Día de la Madre (menor audiencia disponible en todos los canales) y no a la campaña en sí.
+  </div>
+
+  <!-- ── CANALES ── -->
+  <div class="sl">Canales de impacto · cobertura multichannel</div>
+  <div class="canales-grid">
+    <div class="canal-card meta">
+      <div class="canal-icon">📘</div>
+      <p class="canal-name">Meta Ads</p>
+      <p class="canal-desc">Campaña activa del 12 al 15 de mayo. Audiencia nueva (BBDD + similares + RMK). Inversión de $1,007.54 USD ejecutada dentro del presupuesto.</p>
+      <div class="canal-stat">
+        <span class="cstat">255K alcance</span>
+        <span class="cstat">616K impresiones</span>
+        <span class="cstat">Freq. 2.4x</span>
+        <span class="cstat">28 nuevos jug. (14-15)</span>
+      </div>
+    </div>
+    <div class="canal-card sms">
+      <div class="canal-icon">📱</div>
+      <p class="canal-name">SMS</p>
+      <p class="canal-desc">Envíos directos el jueves y viernes a base propia. Canal de mayor volumen de nuevos jugadores atribuidos en los días festivos.</p>
+      <div class="canal-stat">
+        <span class="cstat">9.640 envíos jueves</span>
+        <span class="cstat">10.400 envíos viernes</span>
+        <span class="cstat">Gs. 901.800 costo</span>
+        <span class="cstat">124 nuevos jug.</span>
+      </div>
+    </div>
+    <div class="canal-card whatsapp">
+      <div class="canal-icon">💬</div>
+      <p class="canal-name">Canal WhatsApp</p>
+      <p class="canal-desc">Canal orgánico con 2.700 seguidores. Mensajes recordatorios el jueves y viernes. Sin costo de envío, alto nivel de engagement directo.</p>
+      <div class="canal-stat">
+        <span class="cstat">2.700 seguidores</span>
+        <span class="cstat">2 envíos</span>
+        <span class="cstat">Orgánico</span>
+        <span class="cstat">40 nuevos jug.</span>
+      </div>
+    </div>
+  </div>
+  <div class="no-track">
+    ⚠️ Los 141 canjes de la promo no tienen UTM de origen registrado — el JSIA no captura el canal en el momento del canje. No es posible atribuir estos canjes a Meta, SMS o WhatsApp de forma individual.
+  </div>
+
+  <!-- ── TABLA POR DÍA Y CANAL ── -->
+  <div class="sl">Nuevos jugadores por canal y día · datos backend</div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Meta</th>
+          <th>WhatsApp</th>
+          <th>SMS</th>
+          <th>Total nuevos jugadores</th>
+          <th>Canjearon promo</th>
+          <th>% canje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Jueves 14/05</strong></td>
+          <td class="num">16</td>
+          <td class="num">20</td>
+          <td class="num">40</td>
+          <td class="num">95</td>
+          <td class="num">78</td>
+          <td class="num" style="color:var(--green);">82%</td>
+        </tr>
+        <tr>
+          <td><strong>Viernes 15/05</strong></td>
+          <td class="num">12</td>
+          <td class="num">20</td>
+          <td class="num">84</td>
+          <td class="num">73</td>
+          <td class="num">63</td>
+          <td class="num" style="color:var(--green);">86%</td>
+        </tr>
+        <tr class="tr-total">
+          <td><strong>Totales</strong></td>
+          <td class="num">28</td>
+          <td class="num">40</td>
+          <td class="num">124</td>
+          <td class="num">168</td>
+          <td class="num">141</td>
+          <td class="num" style="color:var(--green);">84%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="insight">
+    <strong>SMS fue el canal de mayor volumen</strong> de nuevos jugadores atribuidos (124 de 168 = 74%), seguido de WhatsApp (40) y Meta (28). Hay una diferencia entre el total por canal (192) y el total real (168) que puede explicarse por usuarios que llegaron desde más de un canal o por diferencias de atribución. <strong>Meta aportó 28 nuevos jugadores trazables</strong> en los festivos con $1,007 USD invertidos.
+  </div>
+
+  <!-- ── JUGADAS TOTALES ── -->
+  <div class="sl">Jugadas totales · todos los UTM + canjes (12–17 mayo)</div>
+  <div class="kpi-4">
+    <div class="kpi">
+      <p class="kpi-label">Jugadas con UTM (289)</p>
+      <p class="kpi-value">95</p>
+      <p class="kpi-sub">Meta · sem. completa</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Jugadas con UTM (289)</p>
+      <p class="kpi-value">152</p>
+      <p class="kpi-sub">SMS · sem. completa</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi-label">Jugadas con UTM (289)</p>
+      <p class="kpi-value">44</p>
+      <p class="kpi-sub">WhatsApp · sem. completa</p>
+    </div>
+    <div class="kpi green">
+      <p class="kpi-label">Canjes (sin UTM)</p>
+      <p class="kpi-value green">141</p>
+      <p class="kpi-sub">Canal no trazable</p>
+      <p class="kpi-note note-ok">289 + 141 = 430 total</p>
+    </div>
+  </div>
+  <div class="insight blue">
+    <strong>Meta aportó 67 jugadas el martes y miércoles</strong> (días de calentamiento) antes de los festivos, y 28 en los festivos. La caída de jugadas Meta el jueves y viernes se explica por la menor audiencia disponible en feriado Día de la Madre. SMS y WhatsApp, al ser comunicación directa a base propia, mantuvieron mejor conversión en esos días.
+  </div>
+
+  <!-- ── COMPARATIVA HISTÓRICA ── -->
+  <div class="sl">Comparativa nuevos jugadores · con campaña vs. promedio 3 meses</div>
+  <div class="day-compare">
+    <div class="day-card">
+      <p class="day-title"><span style="background:var(--megaloto);"></span>Jueves 14 de mayo</p>
+      <div class="day-row"><span class="day-key">Sin campaña (prom. 3m)</span><span class="day-val">81</span></div>
+      <div class="day-row"><span class="day-key">Con campaña</span><span class="day-val">95</span></div>
+      <div class="day-row"><span class="day-key">Variación</span><span class="day-val green">+17.3% ↑</span></div>
+      <div class="day-row"><span class="day-key">Canjearon promo</span><span class="day-val">78 (82%)</span></div>
+    </div>
+    <div class="day-card">
+      <p class="day-title"><span style="background:var(--warn);"></span>Viernes 15 de mayo — Día de la Madre</p>
+      <div class="day-row"><span class="day-key">Sin campaña (prom. 3m)</span><span class="day-val">92</span></div>
+      <div class="day-row"><span class="day-key">Con campaña</span><span class="day-val">73</span></div>
+      <div class="day-row"><span class="day-key">Variación</span><span class="day-val red">-20.7% ↓</span></div>
+      <div class="day-row"><span class="day-key">Canjearon promo</span><span class="day-val">63 (86%)</span></div>
+    </div>
+  </div>
+  <div class="insight">
+    <strong>Total 2 días: 168 vs. 173 promedio histórico (-2.9%).</strong> El resultado neto está prácticamente en línea con el histórico, pero hay que considerar que los feriados son días de menor actividad por naturaleza. El jueves superó el benchmark en +17.3%. El viernes, Día de la Madre, redujo la audiencia disponible en todos los canales — la caída es atribuible al contexto, no a la mecánica.
+  </div>
+
+  <!-- ── JUGADAS ORGÁNICAS ── -->
+  <div class="sl">Impacto en jugadas orgánicas · efecto halo de la campaña</div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Contexto de comparación</th>
+          <th>Jueves (prom. orgánico)</th>
+          <th>Viernes (prom. orgánico)</th>
+          <th>Total</th>
+          <th>Var. vs. Feriado Mayo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Día hábil promedio</td>
+          <td class="num">126</td>
+          <td class="num">142</td>
+          <td class="num">268</td>
+          <td class="num" style="color:var(--green);">+66%</td>
+        </tr>
+        <tr>
+          <td>Feriado Semana Santa</td>
+          <td class="num">104</td>
+          <td class="num">158</td>
+          <td class="num">262</td>
+          <td class="num" style="color:var(--green);">+70%</td>
+        </tr>
+        <tr class="tr-best">
+          <td><strong>Feriado Mayo (con campaña)</strong></td>
+          <td class="num">213</td>
+          <td class="num">232</td>
+          <td class="num"><strong>445</strong></td>
+          <td class="num">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="insight green">
+    <strong>Las jugadas orgánicas (sin UTM) fueron 445 en los dos días festivos</strong> — un 66% más que un día hábil promedio y un 70% más que Semana Santa. Esto sugiere que la campaña generó un <strong>efecto halo significativo</strong>: más allá de los 430 jugadas con UTM, la actividad digital total del feriado Mayo fue notablemente superior a otros feriados comparables.
+  </div>
+
+  <!-- ── META ADS DETAIL ── -->
+  <div class="sl">Meta Ads · desglose por pieza creativa</div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Pieza</th>
+          <th>Formato</th>
+          <th>Conv. pixel</th>
+          <th>% conv.</th>
+          <th>Inversión USD</th>
+          <th>% spend</th>
+          <th>CPR pixel</th>
+          <th>Alcance</th>
+          <th>CR Ranking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tr-best">
+          <td><strong>michelin_11-05</strong></td>
+          <td><span class="tag tag-blue">Video</span></td>
+          <td class="num">109</td>
+          <td class="num">39.4%</td>
+          <td class="num">$293.32</td>
+          <td class="num">29.1%</td>
+          <td class="num" style="color:var(--green);">$2.69</td>
+          <td>141,357</td>
+          <td><span class="tag tag-green">Above avg ★</span></td>
+        </tr>
+        <tr>
+          <td><strong>tuauto_13-05</strong></td>
+          <td><span class="tag tag-gray">Estático</span></td>
+          <td class="num">90</td>
+          <td class="num">32.5%</td>
+          <td class="num">$483.37</td>
+          <td class="num">48.0%</td>
+          <td class="num" style="color:var(--warn);">$5.37</td>
+          <td>151,343</td>
+          <td><span class="tag tag-gray">—</span></td>
+        </tr>
+        <tr>
+          <td><strong>texto_11-05</strong></td>
+          <td><span class="tag tag-gray">Estático</span></td>
+          <td class="num">67</td>
+          <td class="num">24.2%</td>
+          <td class="num">$157.48</td>
+          <td class="num">15.6%</td>
+          <td class="num" style="color:var(--green);">$2.35</td>
+          <td>62,604</td>
+          <td><span class="tag tag-gray">—</span></td>
+        </tr>
+        <tr>
+          <td><strong>santorini_13-05</strong></td>
+          <td><span class="tag tag-gray">Estático</span></td>
+          <td class="num">7</td>
+          <td class="num">2.5%</td>
+          <td class="num">$52.99</td>
+          <td class="num">5.3%</td>
+          <td class="num" style="color:var(--red);">$7.57</td>
+          <td>23,074</td>
+          <td><span class="tag tag-gray">—</span></td>
+        </tr>
+        <tr>
+          <td><strong>tucasapropia + spa</strong></td>
+          <td><span class="tag tag-gray">Estático</span></td>
+          <td class="num">4</td>
+          <td class="num">1.4%</td>
+          <td class="num">$20.38</td>
+          <td class="num">2.0%</td>
+          <td class="num" style="color:var(--red);">$5.10</td>
+          <td>11,007</td>
+          <td><span class="tag tag-gray">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── CHARTS ── -->
+  <div class="sl">Visualizaciones</div>
+  <div class="two-col">
+    <div class="chart-card">
+      <p class="chart-title">Nuevos jugadores por canal · 14 y 15 mayo</p>
+      <div style="position:relative;height:220px;"><canvas id="canalChart"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#1877F2;"></div>Meta</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FFC000;"></div>SMS</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2E9E4F;"></div>WhatsApp</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <p class="chart-title">Nuevos jugadores · con campaña vs. promedio histórico</p>
+      <div style="position:relative;height:220px;"><canvas id="vsChart"></canvas></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#D1D5DB;"></div>Promedio 3 meses</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1A1A1A;"></div>Con campaña</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;">
+    <div class="chart-card">
+      <p class="chart-title">Jugadas totales · con UTM por canal + canjes sin UTM (12–17 mayo)</p>
+      <div style="position:relative;height:200px;"><canvas id="jugadasChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── INVERSIÓN SMS ── -->
+  <div class="sl">Inversión total · todos los canales (SMS + premios)</div>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr><th>Concepto</th><th>Canal</th><th>Cantidad</th><th>Costo (Gs.)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SMS jueves 14 de mayo</td>
+          <td><span class="tag tag-yellow">SMS</span></td>
+          <td class="num">9.640 envíos</td>
+          <td class="num">Gs. 433.800</td>
+        </tr>
+        <tr>
+          <td>SMS viernes 15 de mayo</td>
+          <td><span class="tag tag-yellow">SMS</span></td>
+          <td class="num">10.400 envíos</td>
+          <td class="num">Gs. 468.000</td>
+        </tr>
+        <tr>
+          <td>Jugadas gratis canjeadas</td>
+          <td><span class="tag tag-green">Premios</span></td>
+          <td class="num">141 canjes</td>
+          <td class="num">Gs. 1.410.000</td>
+        </tr>
+        <tr class="tr-total">
+          <td><strong>Total inversión local</strong></td>
+          <td>—</td>
+          <td>—</td>
+          <td class="num">Gs. 2.311.800</td>
+        </tr>
+        <tr>
+          <td>Meta Ads (pauta)</td>
+          <td><span class="tag tag-blue">Meta</span></td>
+          <td>—</td>
+          <td class="num">$1.007,54 USD</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── RECOMENDACIONES ── -->
+  <div class="sl">Aprendizajes y recomendaciones</div>
+  <div class="reco-grid">
+    <div class="reco-card">
+      <div class="reco-num">1</div>
+      <p class="reco-title">SMS es el canal más eficiente en festivos</p>
+      <p class="reco-body">124 de 168 nuevos jugadores trazables vinieron por SMS (74%). El viernes tuvo 84 jugadores nuevos por SMS vs. 12 por Meta. Para próximas activaciones en feriados, aumentar el presupuesto de SMS y mantener Meta como canal de alcance masivo complementario.</p>
+    </div>
+    <div class="reco-card">
+      <div class="reco-num">2</div>
+      <p class="reco-title">Implementar tracking de canjes</p>
+      <p class="reco-body">Los 141 canjes no tienen canal de origen por limitación del JSIA. Identificar el canal de adquisición en el momento del canje permitiría calcular el CPR real por canal y optimizar la inversión en futuras campañas de mecánicas similares.</p>
+    </div>
+    <div class="reco-card">
+      <div class="reco-num">3</div>
+      <p class="reco-title">Video + texto simple lideran en Meta</p>
+      <p class="reco-body">michelin (video, $2.69 CPR, único "Above Average") y texto_11-05 ($2.35 CPR) concentraron el 64% de conversiones con el 45% del spend. En próximas campañas reducir inversión en estáticos visuales elaborados y redirigirla a estos dos formatos ganadores.</p>
+    </div>
+  </div>
+
+  <p class="footnote">
+    * Campaña activa en Meta: 12–15 mayo 2026 · Festivos con promo: 14–15 mayo · Budget Meta: $300 USD/día · Total Meta ejecutado: $1,007.54 USD. ·
+    Inversión local (SMS + premios): Gs. 2.311.800. ·
+    168 nuevos jugadores = dato real backend Megaloto · 141 canjes sin UTM de canal (limitación JSIA). ·
+    Promedio histórico 3 meses: 81 jugadores nuevos jueves / 92 viernes. ·
+    Jugadas orgánicas feriado mayo: 445 (+66% vs. día hábil, +70% vs. Semana Santa). ·
+    Costo por jugada Meta (Analytics GA): $4.32 USD ($1,007.54 ÷ 233 jugadas GA evento clave). ·
+    Elaborado por ADCOM para Megaloto.
+  </p>
+
+</div>
+
+<script>
+const Y='#FFC000', BK='#1A1A1A', GR='#D1D5DB', GN='#16A34A', RD='#DC2626', BL='#2563EB', MG='#2E9E4F', FB='#1877F2';
+
+// Canal chart (stacked bars per day)
+new Chart(document.getElementById('canalChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Jueves 14', 'Viernes 15', 'Total'],
+    datasets: [
+      { label: 'Meta', data: [16,12,28], backgroundColor: FB, borderRadius: 4, borderSkipped: false },
+      { label: 'WhatsApp', data: [20,20,40], backgroundColor: MG, borderRadius: 4, borderSkipped: false },
+      { label: 'SMS', data: [40,84,124], backgroundColor: Y, borderRadius: 4, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: BK, titleColor:'#fff', bodyColor:'#ccc', cornerRadius:8, padding:10 } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size:11, family:'Poppins' }, color:'#999' } },
+      y: { stacked: true, beginAtZero: true, grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Poppins' }, color:'#999' } }
+    }
+  }
+});
+
+// VS histórico
+new Chart(document.getElementById('vsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Jueves', 'Viernes', 'Total'],
+    datasets: [
+      { label: 'Promedio 3 meses', data: [81,92,173], backgroundColor: GR, borderRadius: 4, borderSkipped: false },
+      { label: 'Con campaña', data: [95,73,168], backgroundColor: BK, borderRadius: 4, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: BK, titleColor:'#fff', bodyColor:'#ccc', cornerRadius:8, padding:10 } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size:11, family:'Poppins' }, color:'#999' } },
+      y: { beginAtZero: true, grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Poppins' }, color:'#999' } }
+    }
+  }
+});
+
+// Jugadas chart
+new Chart(document.getElementById('jugadasChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Meta (95)', 'SMS (152)', 'WhatsApp (44)', 'Canjes sin UTM (141)'],
+    datasets: [{ data: [95,152,44,141], backgroundColor: [FB, Y, MG, GN], borderRadius: 6, borderSkipped: false }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + ' jugadas' }, backgroundColor: BK, titleColor:'#fff', bodyColor:'#ccc', cornerRadius:8, padding:10 } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size:11, family:'Poppins' }, color:'#999' } },
+      y: { beginAtZero: true, grid: { color:'rgba(0,0,0,0.05)' }, ticks: { font: { size:10, family:'Poppins' }, color:'#999' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
